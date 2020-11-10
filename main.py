@@ -131,6 +131,9 @@ def update_target(target_x, target_y):
     elif accel_y < -600 and target_y > 0:
         target_y -= 1
 
+    microbit.display.clear()
+    microbit.display.set_pixel(target_x, target_y, 9)
+
     return target_x, target_y
 
 def fire(target_x, target_y, submarines_list):
