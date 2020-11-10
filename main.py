@@ -1,5 +1,5 @@
 import microbit
-from random import randint
+import random
 
 
 def initialize_submarines(nb_submarines, submarine_life):
@@ -18,8 +18,8 @@ def initialize_submarines(nb_submarines, submarine_life):
     submarines_list = []
     for i in range(nb_submarines):
         submarine = {
-            'position_x': randint(0, 4),
-            'position_y': randint(0, 4),
+            'position_x': random.randint(0, 4),
+            'position_y': random.randint(0, 4),
             'life': submarine_life,
             'direction_x': 0,
             'direction_y': 0
@@ -37,7 +37,7 @@ def update_direction(submarines_list):
     
     """
     for submarine in submarines_list:
-        random_chance = randint(1, 10)
+        random_chance = random.randint(1, 10)
         if random_chance == 1:
             submarine['direction_x'], submarine['direction_y'] = define_new_direction()
 
@@ -50,7 +50,7 @@ def define_new_direction():
     new_direction_y: New direction on the y axis (int)
     
     """
-    random_direction = randint(0, 4)
+    random_direction = random.randint(0, 4)
     if random_direction == 0:
         return 0, 0
     elif random_direction == 1:
