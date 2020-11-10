@@ -2,13 +2,13 @@ import microbit
 from random import randint
 
 
-def initialize_submarines(nb_submarines, submarines_life):
+def initialize_submarines(nb_submarines, submarine_life):
     """Initialize the data structure for the game
 
     Parameters
     ----------
     nb_submarines: Amount of submarines to create (int)
-    submarines_life: Life to give to the submarines (int)
+    submarine_life: Life to give to the submarines (int)
 
     Returns
     -------
@@ -20,7 +20,7 @@ def initialize_submarines(nb_submarines, submarines_life):
         submarine = {
             'position_x': randint(0, 4),
             'position_y': randint(0, 4),
-            'life': submarines_life,
+            'life': submarine_life,
             'direction_x': 0,
             'direction_y': 0
         }
@@ -93,6 +93,17 @@ def check_submarines_life(submarines_list):
     
     """
 
+    submarines_alive = False
+    submarines_index = 0
+
+    while not submarines_alive and submarines_index > len(submarines_list):
+        if submarines_list[submarines_index]['life'] != 0:
+            submarines_alive = True
+        submarines_index += 1
+
+    return submarines_alive
+
+
 def update_target(target_x, target_y):
     """Updates the current target of the player using the accelorometer of the microbit
 
@@ -163,7 +174,7 @@ nb_submarines = 4
 submarine_life = 2
 
 # create board and place submarines
-submarines_list = initialize_submarines(nb_submarines)
+submarines_list = initialize_submarines(nb_submarines, submarine_life)
 # submarines_list = [
 #     {
 #         'position_x': 1,
