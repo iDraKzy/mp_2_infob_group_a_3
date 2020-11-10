@@ -82,12 +82,17 @@ def fire(order, target_x, target_y, submarines_list):
     target_x: Current target on the x axis (int)
     target_y: Current target on the y axis (int)
     submarines_list: List of all submarines (list)
-
-    Returns
-    -------
-    updated_submarines_list: Updated list of all submarines (list)
     
     """
+    found_submarine = False
+    for submarine in submarines_list:
+        if submarine['position_x'] == target_x and submarine['position_y'] == target_y:
+            submarine['life'] = submarine['life'] - 1
+            microbit.set_pixel(target_x, target_y, 8)
+            found_submarine = True
+    
+    if not found_submarine:
+        microbit.set_pixel(target_x, target_y, 3)
 
 def sonar(submarines_list):
     """Turn on a pixel of the screen on the position of each submarines
@@ -157,7 +162,7 @@ while not game_is_over:
     microbit.display.clear()
     
     # check if game is not over
-    game_is_over = not check_submarines_life(submarines_list) #To Modify
+    game_is_over = not check_submarines_life(submarines_list)
     
     if not game_is_over:
 	    # update position of submarines
