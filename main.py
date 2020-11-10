@@ -15,6 +15,52 @@ def initialize_submarines(nb_submarines, submarines_life):
     submarines_list: list of dictionaries (list)
     """
 
+    submarines_list = []
+    for i in range(nb_submarines):
+        submarine = {
+            'position_x': randint(0,4),
+            'position_y': randint(0,4),
+            'life': submarines_life,
+            'direction_x': 0,
+            'direction_y': 0
+        }
+        submarine['direction_x'], submarine['direction_y'] = define_new_direction()
+        submarines_list.append(submarine)
+    return submarines_list
+
+def update_direction(submarines_list):
+    """Update the directions of each submarines with a 10% chance
+
+    Parameters
+    ----------
+    submarines_list: List of all submarines (list)
+    
+    """
+    for submarine in submarines_list:
+        if randint(1, 10) == 1:
+            submarine['direction_x'], submarine ['direction_y'] = define_new_direction()
+
+def define_new_direction():
+    """Returns a random direction
+
+    Returns
+    -------
+    new_direction_x: New direction on the x axis (int)
+    new_direction_y: New direction on the y axis (int)
+    
+    """
+    random_direction = randint(0, 4)
+    if random_direction == 0:
+        return 0, 0
+    elif random_direction == 1:
+        return 0, -1
+    elif random_direction == 2:
+        return 0, 1
+    elif random_direction == 3:
+        return 1, 0
+    else:
+        return -1, 0
+
 def update_position(submarines_list):
     """Update the direction and current position of submarines
 
@@ -24,25 +70,7 @@ def update_position(submarines_list):
     
     """
 
-    for submarine in submarines_list:
-        if randint(1, 10) == 1:
-            random_direction = randint(0, 4)
-            if random_direction == 0:
-                submarine['direction_x'] = 0
-                submarine['direction_y'] = 0
-            elif random_direction == 1:
-                submarine['direction_x'] = 0
-                submarine['direction_y'] = -1
-            elif random_direction == 2:
-                submarine['direction_x'] = 0
-                submarine['direction_y'] = 1
-            elif random_direction == 3:
-                submarine['direction_x'] = 1
-                submarine['direction_y'] = 0
-            else:
-                submarine['direction_x'] = -1
-                submarine['direction_y'] = 0
-        
+    for submarine in submarines_list:        
         submarine['position_x'] = submarine['position_x'] + submarine['direction_x']
         submarine['position_y'] = submarine['position_y'] + submarine['direction_y']
 
@@ -73,6 +101,20 @@ def update_target(target_x, target_y):
     updated_target_y: New target on the y axis (int)
     
     """
+
+    accel_x = microbit.accelorometer.get_x()
+    accel_y = microbit.accelorometer.get_y()
+
+    if accel_x > 600:
+        target_x += 1
+    elif accel_x < -600:
+        target_x -= 1
+    elif accel_y > 600:
+        target_y += 1
+    elif accel_y < -600:
+        target_y -= 1
+
+    return target_x, target_y
 
 def fire(order, target_x, target_y, submarines_list):
     """Checks if a submarine exist on the coordinates of the target and removes a life if it was
@@ -166,7 +208,7 @@ while not game_is_over:
     
     if not game_is_over:
 	    # update position of submarines
-	    pass
+	    update_position(submarines_list)
 	    
 	    # update direction of submarines
 	    pass
