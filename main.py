@@ -18,8 +18,8 @@ def initialize_submarines(nb_submarines, submarines_life):
     submarines_list = []
     for i in range(nb_submarines):
         submarine = {
-            'position_x': randint(0,4),
-            'position_y': randint(0,4),
+            'position_x': randint(0, 4),
+            'position_y': randint(0, 4),
             'life': submarines_life,
             'direction_x': 0,
             'direction_y': 0
@@ -37,8 +37,9 @@ def update_direction(submarines_list):
     
     """
     for submarine in submarines_list:
-        if randint(1, 10) == 1:
-            submarine['direction_x'], submarine ['direction_y'] = define_new_direction()
+        random_chance = randint(1, 10)
+        if random_chance == 1:
+            submarine['direction_x'], submarine['direction_y'] = define_new_direction()
 
 def define_new_direction():
     """Returns a random direction
@@ -70,9 +71,14 @@ def update_position(submarines_list):
     
     """
 
-    for submarine in submarines_list:        
-        submarine['position_x'] = submarine['position_x'] + submarine['direction_x']
-        submarine['position_y'] = submarine['position_y'] + submarine['direction_y']
+    for submarine in submarines_list:
+        if submarine['position_x'] + submarine['direction_x'] > 4 or submarine['position_x'] + submarine['direction_x'] < 0:
+            submarine['direction_x'], submarine['direction_y'] = define_new_direction()
+        elif submarine['position_y'] + submarine['direction_y'] > 4 or submarine['position_y'] + submarine['direction_y'] < 0:
+            submarine['direction_x'], submarine['direction_y'] = define_new_direction()
+        else:
+            submarine['position_x'] = submarine['position_x'] + submarine['direction_x']
+            submarine['position_y'] = submarine['position_y'] + submarine['direction_y']
 
 def check_submarines_life(submarines_list):
     """Checks if all submarines's life are different of 0
@@ -129,12 +135,12 @@ def fire(order, target_x, target_y, submarines_list):
     found_submarine = False
     for submarine in submarines_list:
         if submarine['position_x'] == target_x and submarine['position_y'] == target_y:
-            submarine['life'] = submarine['life'] - 1
-            microbit.set_pixel(target_x, target_y, 8)
+            submarine['life'] -= 1
+            microbit.display.set_pixel(target_x, target_y, 8)
             found_submarine = True
     
     if not found_submarine:
-        microbit.set_pixel(target_x, target_y, 3)
+        microbit.display.set_pixel(target_x, target_y, 3)
 
 def sonar(submarines_list):
     """Turn on a pixel of the screen on the position of each submarines
@@ -145,6 +151,8 @@ def sonar(submarines_list):
     
     """
 
+    for submarine in submarines_list:
+        microbit.display.set_pixel(submarine['position_x'], submarine['position_y'], 9)
 
 
 
@@ -211,7 +219,7 @@ while not game_is_over:
 	    update_position(submarines_list)
 	    
 	    # update direction of submarines
-	    pass
+	    update_direction(submarines_list)
 
 # tell that the game is over
 microbit.display.scroll("Game over, you win", delay=100)
