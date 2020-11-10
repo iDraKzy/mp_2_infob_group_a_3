@@ -133,7 +133,7 @@ def update_target(target_x, target_y):
 
     return target_x, target_y
 
-def fire(order, target_x, target_y, submarines_list):
+def fire(target_x, target_y, submarines_list):
     """Checks if a submarine exist on the coordinates of the target and removes a life if it was
 
     Parameters
