@@ -96,7 +96,7 @@ def check_submarines_life(submarines_list):
     submarines_alive = False
     submarines_index = 0
 
-    while not submarines_alive and submarines_index > len(submarines_list):
+    while not submarines_alive and submarines_index < len(submarines_list):
         if submarines_list[submarines_index]['life'] != 0:
             submarines_alive = True
         submarines_index += 1
@@ -122,13 +122,13 @@ def update_target(target_x, target_y):
     accel_x = microbit.accelorometer.get_x()
     accel_y = microbit.accelorometer.get_y()
 
-    if accel_x > 600:
+    if accel_x > 600 and target_x < 4:
         target_x += 1
-    elif accel_x < -600:
+    elif accel_x < -600 and target_x > 0:
         target_x -= 1
-    elif accel_y > 600:
+    elif accel_y > 600 and target_y < 4:
         target_y += 1
-    elif accel_y < -600:
+    elif accel_y < -600 and target_y > 0:
         target_y -= 1
 
     return target_x, target_y
@@ -175,22 +175,6 @@ submarine_life = 2
 
 # create board and place submarines
 submarines_list = initialize_submarines(nb_submarines, submarine_life)
-# submarines_list = [
-#     {
-#         'position_x': 1,
-#         'position_y': 1,
-#         'life': 2,
-#         'direction_x': -1,
-#         'direction_y': 0
-#     },
-#     {
-#         'position_x': 4,
-#         'position_y': 3,
-#         'life': 1,
-#         'direction_x': 0,
-#         'direction_y': 1
-#     }
-# ]
 
 # show where target is right now
 microbit.display.set_pixel(target_x, target_y, 9)
