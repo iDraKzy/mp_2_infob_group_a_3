@@ -163,7 +163,9 @@ def sonar(submarines_list):
     """
 
     for submarine in submarines_list:
-        microbit.display.set_pixel(submarine['position_x'], submarine['position_y'], 9)
+        if submarine['life'] != 0:
+            microbit.display.set_pixel(submarine['position_x'], submarine['position_y'], 9)
+            
 
 
 
