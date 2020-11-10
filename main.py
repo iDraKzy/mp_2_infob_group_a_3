@@ -105,7 +105,7 @@ def check_submarines_life(submarines_list):
 
 
 def update_target(target_x, target_y):
-    """Updates the current target of the player using the accelorometer of the microbit
+    """Updates the current target of the player using the accelerometer of the microbit
 
     Parameters
     ----------
@@ -119,8 +119,8 @@ def update_target(target_x, target_y):
     
     """
 
-    accel_x = microbit.accelorometer.get_x()
-    accel_y = microbit.accelorometer.get_y()
+    accel_x = microbit.accelerometer.get_x()
+    accel_y = microbit.accelerometer.get_y()
 
     if accel_x > 600 and target_x < 4:
         target_x += 1
@@ -161,6 +161,7 @@ def sonar(submarines_list):
     submarines_list: List of all submarines (list)
     
     """
+    microbit.display.clear()
 
     for submarine in submarines_list:
         if submarine['life'] != 0:
