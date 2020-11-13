@@ -119,7 +119,7 @@ def update_target(target_x, target_y):
 
     Notes
     -----
-    After multiple testing we decided to use 600 [μg] has the limit for the trigger of this functions
+    After multiple testing we decided to use 600 [1/1000 G] has the limit for the trigger of this functions
     We found that it was a good balance between maniability and the avoidance of unwanted movement
     
     """
