@@ -116,6 +116,11 @@ def update_target(target_x, target_y):
     -------
     updated_target_x: New target on the x axis (int)
     updated_target_y: New target on the y axis (int)
+
+    Notes
+    -----
+    After multiple testing we decided to use 600 [μg] has the limit for the trigger of this functions
+    We found that it was a good balance between maniability and the avoidance of unwanted movement
     
     """
 
