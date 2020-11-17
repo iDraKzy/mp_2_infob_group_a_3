@@ -1,7 +1,7 @@
 import microbit
 import random
 
-
+# definition of functions
 def initialize_submarines(nb_submarines, submarine_life):
     """Initialize the data structure for the game
 
